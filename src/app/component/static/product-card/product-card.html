@@ -1,0 +1,28 @@
+<div class="w-full" py-4>
+<a href="#" class="block no-underline">
+    <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition duration-300 hover:shadow-xl">
+        <div class="flex flex-row md:flex-col">
+            <!-- image  -->
+             <div class="flex items-center justify-center bg-gray-100 p-4">
+                <img src="{{prod.picture}}" alt="" class="h-32 w-32 object-contain">
+             </div>
+
+             <!-- contenu  -->
+              <div class="md:w-2/3 pl-4">
+                <h5 class="mb-2 text-xl font-bold text-gray-800">
+                Name : {{prod.name}}
+                </h5>
+                
+                <h6 class="mb-3 text-sm text-gray-500">
+                    Price : {{prod.price}}
+                </h6>
+                
+                <p class="mb-2 text-sm text-gray-700">
+                   Description : {{prod.description}}
+                
+                </p>
+              </div>
+        </div>
+    </div>
+</a>
+</div>

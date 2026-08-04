@@ -14,11 +14,23 @@
             }
 
             <app-counter (countEvent)="ListenerCountEvent($event)"/>
-            <h1 class="text-5xl font-bold text-gray-800">
+            <!-- <h1 class="text-5xl font-bold text-gray-800">
+                                                                                                                                                                                                                                                                                                                                                                                                                            {{countnumb}}
+                                                                                                                                                                                                                                                                                                                                                                                                                        </h1> -->
+            <h1 class="text-5xl font-bold "
+                [ngClass]="{'bg-black text-white': countnumb == 4, 'bg-white text-gray-800': countnumb != 4,}">
                 {{countnumb}}
             </h1>
-        
+            <!-- <p>{{isActive}}</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                        <div [class]="tests">Afficher</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                        <p [ngClass]="tests">Gildas</p> -->
+            
+            <p [style]="isActive ? 'display: block;' : 'display: none;'">Lorem ipsum dolor sit amet.</p>
+
+            <!-- <button appAlertDirective="bonjour!!!">Supprimer</button> -->
+            <button appMyDirective (click)="mydirective.setColor('')">Supprimer</button>
         </div>
     </div>
 </section>
+
 

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { Product, ProductCard } from '../../../component/static/product-card/product-card';
 import { Counter } from '../../../component/static/counter/counter';
-
+import { NgClass } from '@angular/common';
+// import { AlertDirective } from '../../../component/directives/alert-directive';
+import { MyDirective } from '../../../component/directives/my-directive';
 
 @Component({
   selector: 'app-home-page',
-  imports: [ProductCard, Counter],
+  imports: [ProductCard, Counter, NgClass, MyDirective],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
@@ -68,4 +70,9 @@ export class HomePage {
   public ListenerCountEvent(valeur: number) {
     this.countnumb = valeur;
   }
+
+  isActive: boolean = false;
+  public tests: string = 'text-3xl bg-red-500 text-white';
+
+  public mydirective = new MyDirective();
 }

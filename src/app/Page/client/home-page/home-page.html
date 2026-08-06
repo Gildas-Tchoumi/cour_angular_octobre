@@ -27,8 +27,9 @@
             
             <p [style]="isActive ? 'display: block;' : 'display: none;'">Lorem ipsum dolor sit amet.</p>
 
-            <!-- <button appAlertDirective="bonjour!!!">Supprimer</button> -->
-            <button appMyDirective (click)="mydirective.setColor('')">Supprimer</button>
+            <!-- <button appAlertDirective="true">Supprimer</button> -->
+            <p *appMyDirective="false">Connecter</p>
+            <!-- <button appMyDirective (click)="mydirective.setColor('')">Supprimer</button> -->
         </div>
     </div>
 </section>

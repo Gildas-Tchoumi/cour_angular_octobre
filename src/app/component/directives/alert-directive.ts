@@ -4,10 +4,9 @@ import { Directive, HostListener, Input } from '@angular/core';
   selector: '[appAlertDirective]',
 })
 export class AlertDirective {
-  @Input('appAlertDirective') text = '';
-
-  @HostListener('click', ['$event'])
-  run(event: Event) {
-    alert(this.text);
-  }
+  // @Input('appAlertDirective') text = '';
+  // @HostListener('click', ['$event'])
+  // run(event: Event) {
+  //   alert(this.text);
+  // }
 }

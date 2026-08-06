@@ -1,9 +1,11 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { Product, ProductCard } from '../../../component/static/product-card/product-card';
 import { Counter } from '../../../component/static/counter/counter';
 import { NgClass } from '@angular/common';
 // import { AlertDirective } from '../../../component/directives/alert-directive';
 import { MyDirective } from '../../../component/directives/my-directive';
+import { AlertDirective } from '../../../component/directives/alert-directive';
+import { ProductService } from '../../../services/product-service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,7 +13,7 @@ import { MyDirective } from '../../../component/directives/my-directive';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {
+export class HomePage implements OnInit {
   // public product: Product = {
   //   id: 1,
   //   name: 'telephone',
@@ -21,50 +23,17 @@ export class HomePage {
   // };
 
   // creer une liste de produits
-  public products: Array<Product> = [
-    {
-      id: 1,
-      name: 'telephone',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
-      description: 'test test',
-    },
-    {
-      id: 2,
-      name: 'souris',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png',
-      description: 'souris',
-    },
-    {
-      id: 3,
-      name: 'clavier',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png',
-      description: 'clavier',
-    },
-    {
-      id: 4,
-      name: 'Ecran',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png',
-      description: 'Ecran',
-    },
-    {
-      id: 5,
-      name: 'Imprimante',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/005.png',
-      description: 'Imprimante',
-    },
-    {
-      id: 6,
-      name: 'Ecouteur',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/006.png',
-      description: 'Ecouteur',
-    },
-  ];
+  private productService = inject(ProductService);
+  // public products: Array<Product> = this.productService.getproduct();
+  public products: Array<Product> = [];
+
+  ngOnInit(): void {
+    this.products = this.productService.getproduct();
+  }
+  // constructor(private productService: ProductService) {
+  //   this.products = this.productService.getproduct();
+  // }
+
   public countnumb: number = 0;
 
   public ListenerCountEvent(valeur: number) {
@@ -74,5 +43,5 @@ export class HomePage {
   isActive: boolean = false;
   public tests: string = 'text-3xl bg-red-500 text-white';
 
-  public mydirective = new MyDirective();
+  // public mydirective = new MyDirective();
 }

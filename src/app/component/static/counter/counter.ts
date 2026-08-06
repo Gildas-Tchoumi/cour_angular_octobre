@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
@@ -6,7 +6,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './counter.html',
   styleUrl: './counter.css',
 })
-export class Counter {
+export class Counter implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    console.log('composant demonter');
+  }
+  ngOnInit(): void {
+    console.log('composant monter');
+  }
   public count: number = 0;
 
   @Output()

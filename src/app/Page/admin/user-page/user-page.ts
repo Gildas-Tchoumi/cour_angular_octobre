@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user-page',
@@ -11,8 +11,17 @@ export class UserPage {
   public nom: string = '';
   public email: string = '';
   public avis: string = '';
+  public phones: string[] = [''];
 
-  onSubmit() {
+  addphonenumber() {
+    this.phones.push("");
+  }
+
+  deletephonenumber(index: number) {
+    this.phones.splice(index,1);
+  }
+  onSubmit(form: NgForm) {
+   
     console.log(`Nom: ${this.nom}`);
     console.log(`Email: ${this.email}`);
     console.log(`Avis: ${this.avis}`);

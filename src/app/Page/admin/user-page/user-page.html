@@ -1,45 +1,114 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-    <div class="w-full max-w-lg rounded-xl bg-white p-8 shadow-xl">
-        <h2 class="mb-6 text-center text-3xl font-bold text-gray-800">
-            Contactez-nous
-        </h2>
+  <div class="w-full max-w-lg rounded-xl bg-white p-8 shadow-xl">
+    <h2 class="mb-6 text-center text-3xl font-bold text-gray-800">Contactez-nous</h2>
 
-        <form class="space-y-5">
+    <form class="space-y-5" #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <!-- Nom -->
+      <div>
+        <label for="nom" class="mb-2 block text-sm font-semibold text-gray-700"> Nom </label>
+        <input
+          id="nom"
+          type="text"
+          required
+          minlength="9"
+          #nomref="ngModel"
+          [(ngModel)]="nom"
+          name="nom"
+          placeholder="Entrez votre nom"
+          class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        />
+      </div>
+      <!-- afficher le message d'erreur  -->
+      @if (nomref.touched && nomref.getError('required')) {
+        <small class="text-red-700">le non est obligatoire</small>
+      }
+      @if (nomref.touched && nomref.getError('minlength')) {
+        <small class="text-red-700">le non doit contenir mini 9 caract</small>
+      }
 
-            <!-- Nom -->
-            <div>
-                <label for="nom" class="mb-2 block text-sm font-semibold text-gray-700">
-                    Nom
-                </label>
-                <input id="nom" type="text" [(ngModel)]="nom" name="nom" placeholder="Entrez votre nom"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
-            </div>
+      <!-- Email -->
+      <div>
+        <label for="email" class="mb-2 block text-sm font-semibold text-gray-700"> Email </label>
+        <input
+          id="email"
+          type="email"
+          required
+          pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+          [(ngModel)]="email"
+          #emailref="ngModel"
+          name="email"
+          placeholder="exemple@email.com"
+          class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        />
+      </div>
+      @if (emailref.touched && emailref.getError('required')) {
+        <small class="text-red-700">l'email est obligatoire</small>
+      }
+      @if (emailref.touched && emailref.getError('pattern')) {
+        <small class="text-red-700">l'email doit etre valide</small>
+      }
 
-            <!-- Email -->
-            <div>
-                <label for="email" class="mb-2 block text-sm font-semibold text-gray-700">
-                    Email
-                </label>
-                <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="exemple@email.com"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
-            </div>
+      <!-- phone  -->
+      <button type="button" (click)="addphonenumber()" class="btn btn-primary px-6 py-3 h-[60px]">
+        Add phone number
+      </button>
+      @for (item of phones; track $index) {
+        <div class="flex gap-4">
+          <div>
+            <label for="phone" class="mb-2 block text-sm font-semibold text-gray-700">
+              Telephone
+            </label>
+            <input
+              id="phone"
+              type="text"
+              required
+              pattern="^[0-9]{9}$"
+              #phoneref="ngModel"
+              [(ngModel)]="phones[$index]"
+              name="phones{{ $index }}"
+              placeholder="Entrez votre numero de Telephone"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            />
+          </div>
+          <button
+            type="button"
+            (click)="deletephonenumber($index)"
+            class="btn btn-primary px-6 py-3 h-[60px]"
+          >
+            Delete phone number
+          </button>
+        </div>
+        @if (phoneref.touched && phoneref.getError('required')) {
+          <small class="text-red-700">le numero de phone est obligatoire</small>
+        }
+        @if (phoneref.touched && phoneref.getError('pattern')) {
+          <small class="text-red-700">le numero doit contenir 9 chiffres</small>
+        }
+      }
 
-            <!-- Avis -->
-            <div>
-                <label for="avis" class="mb-2 block text-sm font-semibold text-gray-700">
-                    Votre avis
-                </label>
-                <textarea id="avis" rows="5" [(ngModel)]="avis" name="avis" placeholder="Écrivez votre avis..."
-                    class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"></textarea>
-            </div>
+      <!-- Avis -->
+      <div>
+        <label for="avis" class="mb-2 block text-sm font-semibold text-gray-700">
+          Votre avis
+        </label>
+        <textarea
+          id="avis"
+          rows="5"
+          [(ngModel)]="avis"
+          name="avis"
+          placeholder="Écrivez votre avis..."
+          class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        ></textarea>
+      </div>
 
-            <!-- Bouton -->
-            <button type="submit" (click)="onSubmit()"
-                class="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-95">
-                Soumettre
-            </button>
-
-        </form>
-    </div>
-    <p>{{nom}}</p>
+      <!-- Bouton -->
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-95"
+      >
+        Soumettre
+      </button>
+    </form>
+  </div>
+  <!-- <p>{{ nom }}</p> -->
 </div>

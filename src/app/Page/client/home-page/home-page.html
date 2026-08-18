@@ -4,10 +4,10 @@
             @for(item of products; track item.id) {
                 @if($odd) {
                     <div class="border border-transparent hover:border-red-500 transition-colors duration-300">
-                        <app-product-card [prod]="item" />
+                        <app-product-card [prod]="item" [isAdmin]="isAdmin" />
                     </div>
                 }@else {
-                    <app-product-card [prod]="item" />
+                    <app-product-card [prod]="item" [isAdmin]="isAdmin" />
                 }
             } @empty {
                 <p>Aucun produits trouve</p>

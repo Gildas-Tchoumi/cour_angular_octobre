@@ -1,11 +1,12 @@
 import { Component, inject, Inject, OnInit } from '@angular/core';
-import { Product, ProductCard } from '../../../component/static/product-card/product-card';
+import {ProductCard } from '../../../component/static/product-card/product-card';
 import { Counter } from '../../../component/static/counter/counter';
 import { NgClass } from '@angular/common';
 // import { AlertDirective } from '../../../component/directives/alert-directive';
 import { MyDirective } from '../../../component/directives/my-directive';
 import { AlertDirective } from '../../../component/directives/alert-directive';
 import { ProductService } from '../../../services/product-service';
+import { Product } from '../../../model/produit';
 
 @Component({
   selector: 'app-home-page',
@@ -21,6 +22,7 @@ export class HomePage implements OnInit {
   //   picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
   //   description: 'test test',
   // };
+  public isAdmin: boolean = false;
 
   // creer une liste de produits
   private productService = inject(ProductService);
@@ -28,7 +30,7 @@ export class HomePage implements OnInit {
   public products: Array<Product> = [];
 
   ngOnInit(): void {
-    this.products = this.productService.getproduct();
+    this.products = this.productService.getproducts();
   }
   // constructor(private productService: ProductService) {
   //   this.products = this.productService.getproduct();

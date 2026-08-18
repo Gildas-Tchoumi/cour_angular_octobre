@@ -1,4 +1,4 @@
-<div class="w-full" py-4>
+<div class="w-full relative border-0 py-4">
 <a href="#" class="block no-underline">
     <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md transition duration-300 hover:shadow-xl">
         <div class="flex flex-row md:flex-col">
@@ -25,4 +25,7 @@
         </div>
     </div>
 </a>
+@if (isAdmin()) {
+    <a class="absolute bottom-6 right-4 bg-amber-400 px-2.5 py-2 rounded-md hover:bg-amber-500" [routerLink]="['/admin/products/productEdit', prod.id]">Edit</a>
+}
 </div>

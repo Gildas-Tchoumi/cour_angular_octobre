@@ -2,7 +2,7 @@
   <div class="w-full max-w-lg rounded-xl bg-white p-8 shadow-xl">
     <h2 class="mb-6 text-center text-3xl font-bold text-gray-800">Contactez-nous</h2>
 
-    <form class="space-y-5" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <form class="space-y-5" [formGroup]="myForm" (ngSubmit)="onSubmit($event)">
       <!-- Nom -->
       <div>
         <label for="nom" class="mb-2 block text-sm font-semibold text-gray-700"> Nom </label>
@@ -11,20 +11,31 @@
           type="text"
           required
           minlength="9"
-          #nomref="ngModel"
-          [(ngModel)]="nom"
+          formControlName="name"
+          /* #nomref="ngModel"
+          [(ngModel)]="nom" */
           name="nom"
           placeholder="Entrez votre nom"
+          [class.border-red-500]="myForm.get('name')?.touched && myForm.get('name')?.invalid"
+          [class.border-green-500]="myForm.get('name')?.touched && myForm.get('name')?.valid"
+          [class.border-green-500]="myForm.get('name')?.dirty && myForm.get('name')?.valid"
           class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
       </div>
       <!-- afficher le message d'erreur  -->
-      @if (nomref.touched && nomref.getError('required')) {
+       @if (myForm.get('name')?.touched && myForm.get('name')?.hasError('required')) {
+        <small class="text-red-700">le nom est obligatoire</small>
+       }
+       @if(myForm.get('name')?.touched && myForm.get('name')?.hasError('minlength')) {
+        <small class="text-red-700">le nom doit contenir mini 9 caract</small>
+
+       }
+      <!-- @if (nomref.touched && nomref.getError('required')) {
         <small class="text-red-700">le non est obligatoire</small>
       }
       @if (nomref.touched && nomref.getError('minlength')) {
         <small class="text-red-700">le non doit contenir mini 9 caract</small>
-      }
+      } -->
 
       <!-- Email -->
       <div>
@@ -34,25 +45,65 @@
           type="email"
           required
           pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-          [(ngModel)]="email"
-          #emailref="ngModel"
+          /* [(ngModel)]="email"
+          #emailref="ngModel" */
+          formControlName="email"
           name="email"
           placeholder="exemple@email.com"
+          [class.border-red-500]="myForm.get('email')?.touched && myForm.get('email')?.invalid"
+          [class.border-green-500]="myForm.get('email')?.touched && myForm.get('email')?.valid"
+          [class.border-green-500]="myForm.get('email')?.dirty && myForm.get('email')?.valid"
           class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
       </div>
-      @if (emailref.touched && emailref.getError('required')) {
+      @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('required')) {
+        <small class="text-red-700">l'email est obligatoire</small>
+      }
+      @if (myForm.get('email')?.touched && myForm.get('email')?.hasError('email')) {
+        <small class="text-red-700">l'email doit etre valide</small>
+      }
+      <!-- @if (emailref.touched && emailref.getError('required')) {
         <small class="text-red-700">l'email est obligatoire</small>
       }
       @if (emailref.touched && emailref.getError('pattern')) {
         <small class="text-red-700">l'email doit etre valide</small>
-      }
+      } -->
 
       <!-- phone  -->
-      <button type="button" (click)="addphonenumber()" class="btn btn-primary px-6 py-3 h-[60px]">
-        Add phone number
+        <button class="bg-blue-500 py-2.5 px-5 rounded-md" (click)="addphonenumber()">
+        Ajouter un téléphone +
       </button>
       @for (item of phones; track $index) {
+        <div>
+          <label for="phone-{{ $index }}" class="mb-2 block text-sm font-semibold text-gray-700">
+            Téléphone {{ $index + 1 }}
+          </label>
+          <input
+            id="phone{{ $index }}"
+            type="tel"
+            formControlName="phone{{ $index }}"
+            name="phone{{ $index }}"
+            placeholder="Entrez votre téléphone"
+            [class.border-red-500]="isPhoneInvalid($index)"
+            [class.border-green-500]="isPhoneValid($index)"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+          />
+          @if (myForm.get("phone" + $index)?.touched && myForm.get("phone" + $index)?.hasError('pattern')) {
+            <small class="text-red-500 text-sm">Le téléphone doit contenir 9 chiffres.</small>
+          }
+          @if (myForm.get("phone" + $index)?.touched && myForm.get("phone" + $index)?.hasError('required')) {
+            <small class="text-red-500 text-sm">Le téléphone est requis.</small>
+          }
+        </div>
+        <button class="bg-red-500 py-2.5 px-5 rounded-md" (click)="deletephonenumber($index)">
+          Supprimer un téléphone -
+        </button>
+      }
+      <!-- <button type="button" (click)="addphonenumber()" class="btn btn-primary px-6 py-3 h-15">
+        Add phone number
+      </button> -->
+      
+      <!-- @for (item of phones; track $index) {
         <div class="flex gap-4">
           <div>
             <label for="phone" class="mb-2 block text-sm font-semibold text-gray-700">
@@ -84,7 +135,7 @@
         @if (phoneref.touched && phoneref.getError('pattern')) {
           <small class="text-red-700">le numero doit contenir 9 chiffres</small>
         }
-      }
+      } -->
 
       <!-- Avis -->
       <div>
@@ -94,7 +145,7 @@
         <textarea
           id="avis"
           rows="5"
-          [(ngModel)]="avis"
+          /* [(ngModel)]="avis" */
           name="avis"
           placeholder="Écrivez votre avis..."
           class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
@@ -104,7 +155,8 @@
       <!-- Bouton -->
       <button
         type="submit"
-        class="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-95"
+        [disabled]="myForm.invalid"
+        class="w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-none rounded-lg bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-95"
       >
         Soumettre
       </button>

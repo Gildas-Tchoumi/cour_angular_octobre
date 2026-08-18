@@ -9,6 +9,8 @@ import { AdminLayout } from './Layouts/admin-layout/admin-layout';
 import { ProductPage } from './Page/admin/product-page/product-page';
 import { UserPage } from './Page/admin/user-page/user-page';
 import { NotFoundPage } from './Page/not-found-page/not-found-page';
+import { ProductCreate } from './Page/admin/product-create/product-create';
+import { ProductEdit } from './Page/admin/product-edit/product-edit';
 
 export const routes: Routes = [
   {
@@ -27,6 +29,8 @@ export const routes: Routes = [
       { path: '', component: DashboardPage },
       { path: 'products', component: ProductPage },
       { path: 'users', component: UserPage },
+      {path: 'products/productEdit/:id', component: ProductEdit},
+      {path: 'products/productCreate', component: ProductCreate}
     ],
   },
 

@@ -1,0 +1,68 @@
+<section class="bg-gray-100 w-full h-screen p-8">
+  <div class="bg-white container max-w-lg p-8 mx-auto min-h-screen rounded-lg">
+    <form action="" (submit)="submit($event)" class="space-y-5">
+      <div class="">
+        <label for="name">nom</label><br />
+        <input
+          type="text"
+          name="name"
+          [formControl]="name"
+          placeholder="Entrez lz nom du produit"
+          class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+          [class.border-red-500]="name.touched && name.invalid"
+          [class.border-green-500]="name.dirty && name.valid"
+        />
+        @if (name.invalid && name.touched) {
+          <small class="text-red-500 text-sm">Le nom est requis.</small>
+        }
+      </div>
+      <div class="">
+        <label for="price">price</label><br />
+        <input
+          type="number"
+          name="price"
+          [formControl]="price"
+          class="border-2 border-gray-400 rounded-md"
+          class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+          [class.border-red-500]="price.touched && price.invalid"
+          [class.border-green-500]="price.dirty && price.valid"
+        />
+        @if (price.touched && price.hasError('required')) {
+          <small class="text-red-500 text-sm">Le prix est requis.</small>
+        }
+        @if (price.touched && price.hasError('min')) {
+          <small class="text-red-500 text-sm">Le doit etre sup à 10.</small>
+        }
+      </div>
+      <div class="">
+        <label for="description">description</label><br />
+        <input
+          type="text"
+          name="description"
+          [formControl] = "description"
+          class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+        />
+      </div>
+      <div class="">
+        <label for="category">category</label><br />
+        <select
+          name="category"
+          [formControl]="category"
+          class="border  border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+        >
+          @for (item of categories; track item) {
+            <option [value]="item.id" [selected]="oldProduct.category.id == item.id">{{ item.name }}</option>
+          }
+        </select>
+      </div>
+      <button
+        type="submit"
+        class="disabled:bg-gray-500 disabled:cursor-not-allowed disabled:scale-none bg-amber-500 hover:bg-amber-600 active:scale-90 rounded-lg w-full p-3 transition"
+        [disabled]="name.invalid || price.invalid"
+        onclick="history.back()"
+      >
+        Update
+      </button>
+    </form>
+  </div>
+</section>

@@ -1,102 +1,41 @@
-import { Service } from '@angular/core';
-import { Product } from '../model/produit';
+import { inject, Service } from '@angular/core';
+import { Product, products } from '../model/produit';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 // import { Product } from '../component/static/product-card/product-card';
 
 @Service()
 export class ProductService {
-  private products: Product[] = [
-    {
-      id: 1,
-      name: 'telephone',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
-      description: 'test test',
-      category: {
-        id: 2,
-        description: 'description de la categorie electronique',
-        name: 'electronique',
-      },
-    },
-    {
-      id: 2,
-      name: 'souris',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png',
-      description: 'souris',
-      category: {
-        id: 4,
-        description: 'description de la categorie cosmétique',
-        name: 'cosmetique',
-      },
-    },
-    {
-      id: 3,
-      name: 'clavier',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png',
-      description: 'clavier',
-      category: {
-        id: 1,
-        description: 'description de la categorie éducation',
-        name: 'education',
-      },
-    },
-    {
-      id: 4,
-      name: 'Ecran',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png',
-      description: 'Ecran',
-      category: {
-        id: 4,
-        description: 'description de la categorie sport',
-        name: 'sport',
-      },
-    },
-    {
-      id: 5,
-      name: 'Imprimante',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/005.png',
-      description: 'Imprimante',
-      category: {
-        id: 3,
-        description: 'description de la categorie electronique',
-        name: 'electronique',
-      },
-    },
-    {
-      id: 6,
-      name: 'Ecouteur',
-      price: 12000,
-      picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/006.png',
-      description: 'Ecouteur',
-      category: {
-        id: 4,
-        description: 'description de la categorie cosmétique',
-        name: 'cosmetique',
-      },
-    },
-  ];
+  // url de base
+  private readonly apiurl = 'http://localhost:3000/products';
 
-  createProduct(product: Product) {
-    this.products.push(product);
+  //injecter le client http
+  readonly #http = inject(HttpClient);
+
+  // private products: Product[] = [];
+
+  getproductlist(): Observable<products> {
+    return this.#http.get<products>(this.apiurl);
   }
 
-  updateProduct(product: Product) {
-    this.products = this.products.map((item) => {
-      if (item.id == product.id) {
-        return product;
-      }
-      return item;
-    });
+  createProduct(product: Omit<Product, 'id'>): Observable<Product> {
+    return this.#http.post<Product>(this.apiurl, product);
   }
 
-  getById(id: number): Product {
-    return this.products.find((item) => item.id == id) as Product;
-  }
+  // updateProduct(product: Product) {
+  //   this.products = this.products.map((item) => {
+  //     if (item.id == product.id) {
+  //       return product;
+  //     }
+  //     return item;
+  //   });
+  // }
 
-  getproducts(): Product[] {
-    return this.products;
-  }
+  // getById(id: number): Product {
+  //   return this.products.find((item) => item.id == id) as Product;
+  // }
+
+  // getproducts(): Product[] {
+  //   return this.products;
+  // }
 }

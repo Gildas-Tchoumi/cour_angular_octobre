@@ -1,5 +1,5 @@
 import { Component, inject, Inject, OnInit } from '@angular/core';
-import {ProductCard } from '../../../component/static/product-card/product-card';
+import { ProductCard } from '../../../component/static/product-card/product-card';
 import { Counter } from '../../../component/static/counter/counter';
 import { NgClass } from '@angular/common';
 // import { AlertDirective } from '../../../component/directives/alert-directive';
@@ -7,6 +7,8 @@ import { MyDirective } from '../../../component/directives/my-directive';
 import { AlertDirective } from '../../../component/directives/alert-directive';
 import { ProductService } from '../../../services/product-service';
 import { Product } from '../../../model/produit';
+import { readonly } from '@angular/forms/signals';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home-page',
@@ -27,11 +29,10 @@ export class HomePage implements OnInit {
   // creer une liste de produits
   private productService = inject(ProductService);
   // public products: Array<Product> = this.productService.getproduct();
-  public products: Array<Product> = [];
+  // public products: Array<Product> = [];
 
-  ngOnInit(): void {
-    this.products = this.productService.getproducts();
-  }
+  readonly products = toSignal(this.productService.getproductlist(), { initialValue: [] });
+  ngOnInit(): void {}
   // constructor(private productService: ProductService) {
   //   this.products = this.productService.getproduct();
   // }

@@ -1,0 +1,52 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "telephone",
+      "price": 12000,
+      "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
+      "description": "test test",
+      "category": {
+        "id": 2,
+        "description": "description de la categorie electronique",
+        "name": "electronique"
+      }
+    },
+    {
+      "id": "2",
+      "name": "telephone",
+      "price": 12000,
+      "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
+      "description": "test test",
+      "category": {
+        "id": 4,
+        "description": "description de la categorie electronique",
+        "name": "cosmetique"
+      }
+    },
+    {
+      "id": "3",
+      "name": "clavier",
+      "price": 12000,
+      "picture": "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
+      "description": "clavier",
+      "category": {
+        "id": 1,
+        "description": "description de la categorie éducation",
+        "name": "education"
+      }
+    },
+    {
+      "name": "Genevieve Carter",
+      "id": "xlCr0S7uMmw",
+      "price": 286,
+      "description": "Repudiandae dolor to",
+      "category": {
+        "id": 1,
+        "description": "description de la categorie électronique",
+        "name": "electronique"
+      }
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

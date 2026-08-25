@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Product } from '../../../model/produit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-create',
@@ -21,6 +22,8 @@ export class ProductCreate implements OnInit {
   categoryService: CategoryService = inject(CategoryService);
   productService: ProductService = inject(ProductService);
   categories: Category[] = this.categoryService.getCategories();
+
+  readonly router = inject(Router);
 
   private fg = inject(FormBuilder);
 
@@ -54,15 +57,20 @@ export class ProductCreate implements OnInit {
     // console.log(this.price.value);
     // console.log(this.description.value);
     // console.log(this.category.value);
-    // const product: Product = {
-    //   name: this.name.value as string,
-    //   id: this.productService.getproducts().length,
-    //   price: Number.parseFloat(this.price.value as any),
-    //   description: this.description.value as string,
-    //   category: this.categories.find((item) => item.id == this.category.value) as Category,
-    // };
+    const product: Product = {
+      name: this.productform.get('name')?.value as string,
+      id: 0,
+      // id: this.productService.getproducts().length,
+      price: Number.parseFloat(this.productform.get('price')?.value as any),
+      description: this.productform.get('description')?.value as string,
+      category: this.categories.find(
+        (item) => item.id == this.productform.get('category')?.value,
+      ) as Category,
+    };
 
-    // this.productService.createProduct(product);
+    this.productService.createProduct(product).subscribe((productadd) => {
+      this.router.navigate(['/admin/product']);
+    });
     // console.log('produit creé !');
   }
   // setName() {

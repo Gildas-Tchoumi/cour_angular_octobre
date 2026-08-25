@@ -1,37 +1,42 @@
 <section class="py-4">
-    <div class="container  mx-auto px-4">
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            @for(item of products; track item.id) {
-                @if($odd) {
-                    <div class="border border-transparent hover:border-red-500 transition-colors duration-300">
-                        <app-product-card [prod]="item" [isAdmin]="isAdmin" />
-                    </div>
-                }@else {
-                    <app-product-card [prod]="item" [isAdmin]="isAdmin" />
-                }
-            } @empty {
-                <p>Aucun produits trouve</p>
-            }
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      @for (item of products(); track $index) {
+        @if ($odd) {
+          <div
+            class="border border-transparent hover:border-red-500 transition-colors duration-300"
+          >
+            <app-product-card [prod]="item" [isAdmin]="isAdmin" />
+          </div>
+        } @else {
+          <app-product-card [prod]="item" [isAdmin]="isAdmin" />
+        }
+      } @empty {
+        <p>Aucun produits trouve</p>
+      }
 
-            <app-counter (countEvent)="ListenerCountEvent($event)"/>
-            <!-- <h1 class="text-5xl font-bold text-gray-800">
+      <app-counter (countEvent)="ListenerCountEvent($event)" />
+      <!-- <h1 class="text-5xl font-bold text-gray-800">
                                                                                                                                                                                                                                                                                                                                                                                                                             {{countnumb}}
                                                                                                                                                                                                                                                                                                                                                                                                                         </h1> -->
-            <h1 class="text-5xl font-bold "
-                [ngClass]="{'bg-black text-white': countnumb == 4, 'bg-white text-gray-800': countnumb != 4,}">
-                {{countnumb}}
-            </h1>
-            <!-- <p>{{isActive}}</p>
+      <h1
+        class="text-5xl font-bold"
+        [ngClass]="{
+          'bg-black text-white': countnumb == 4,
+          'bg-white text-gray-800': countnumb != 4,
+        }"
+      >
+        {{ countnumb }}
+      </h1>
+      <!-- <p>{{isActive}}</p>
                                                                                                                                                                                                                                                                                                                                                                                                                         <div [class]="tests">Afficher</div>
                                                                                                                                                                                                                                                                                                                                                                                                                         <p [ngClass]="tests">Gildas</p> -->
-            
-            <p [style]="isActive ? 'display: block;' : 'display: none;'">Lorem ipsum dolor sit amet.</p>
 
-            <!-- <button appAlertDirective="true">Supprimer</button> -->
-            <p *appMyDirective="false">Connecter</p>
-            <!-- <button appMyDirective (click)="mydirective.setColor('')">Supprimer</button> -->
-        </div>
+      <p [style]="isActive ? 'display: block;' : 'display: none;'">Lorem ipsum dolor sit amet.</p>
+
+      <!-- <button appAlertDirective="true">Supprimer</button> -->
+      <p *appMyDirective="false">Connecter</p>
+      <!-- <button appMyDirective (click)="mydirective.setColor('')">Supprimer</button> -->
     </div>
+  </div>
 </section>
-
-

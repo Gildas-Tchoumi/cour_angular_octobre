@@ -1,18 +1,21 @@
 <section class="py-4">
-    <div class="container  mx-auto px-4">
-    <a routerLink="/admin/products/productCreate" class="text-white px-2 py-2.5 inline-block mb-2.5 rounded-md bg-blue-500 hover:bg-blue-600">Ajouter +</a>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      
-      @for (item of products; track item.category?.name) {
+  <div class="container mx-auto px-4">
+    <a
+      routerLink="/admin/products/productCreate"
+      class="text-white px-2 py-2.5 inline-block mb-2.5 rounded-md bg-blue-500 hover:bg-blue-600"
+      >Ajouter +</a
+    >
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      @for (item of products(); track item.category?.name) {
         <div
           class="border border-transparent transition-colors duration-300"
           [class]="categoryStyle[item.category.name]"
         >
-          <app-product-card [prod]="item" [isAdmin]="true"/>
+          <app-product-card [prod]="item" [isAdmin]="true" />
         </div>
       } @empty {
         <p>Aucun produits trouve</p>
       }
     </div>
-            </div>
-            </section>
+  </div>
+</section>

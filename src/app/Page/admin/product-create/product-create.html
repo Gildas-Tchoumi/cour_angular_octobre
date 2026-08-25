@@ -1,19 +1,24 @@
 <section class="bg-gray-100 w-full h-screen p-8">
   <div class="bg-white container max-w-lg p-8 mx-auto min-h-screen rounded-lg">
-    <form action="" (submit)="submit($event)" class="space-y-5">
+    <form [formGroup]="productform" (submit)="submit($event)" class="space-y-5">
       <div class="">
         <label for="name">nom</label><br />
         <input
           type="text"
           name="name"
-          [formControl]="name"
+          formControlName="name"
           placeholder="Entrez lz nom du produit"
           class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
-          [class.border-red-500]="name.touched && name.invalid"
-          [class.border-green-500]="name.dirty && name.valid"
+          [class.border-red-500]="
+            productform.get('name')?.touched && productform.get('name')?.hasError('required')
+          "
+          /* [class.border-green-500]="name.dirty && name.valid" */
         />
-        @if (name.invalid && name.touched) {
+        @if (productform.get('name')?.touched && productform.get('name')?.hasError('required')) {
           <small class="text-red-500 text-sm">Le nom est requis.</small>
+        }
+        @if (productform.get('name')?.touched && productform.get('name')?.hasError('minLength')) {
+          <small class="text-red-500 text-sm">Le nom doit contenir min 4 caracteres.</small>
         }
       </div>
       <div class="">
@@ -21,17 +26,19 @@
         <input
           type="number"
           name="price"
-          [formControl]="price"
+          formControlName="price"
           class="border-2 border-gray-400 rounded-md"
           class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
-          [class.border-red-500]="price.touched && price.invalid"
-          [class.border-green-500]="price.dirty && price.valid"
+          [class.border-red-500]="
+            productform.get('price')?.touched && productform.get('price')?.hasError('required')
+          "
+          /* [class.border-green-500]="price.dirty && price.valid" */
         />
-        @if (price.touched && price.hasError('required')) {
+        @if (productform.get('price')?.touched && productform.get('price')?.hasError('required')) {
           <small class="text-red-500 text-sm">Le prix est requis.</small>
         }
-        @if (price.touched && price.hasError('min')) {
-          <small class="text-red-500 text-sm">Le doit etre sup à 10.</small>
+        @if (productform.get('price')?.touched && productform.get('price')?.hasError('min')) {
+          <small class="text-red-500 text-sm">Le prix doit etre sup à 10.</small>
         }
       </div>
       <div class="">
@@ -39,7 +46,7 @@
         <input
           type="text"
           name="description"
-          [formControl] = "description"
+          formControlName="description"
           class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
         />
       </div>
@@ -47,19 +54,54 @@
         <label for="category">category</label><br />
         <select
           name="category"
-          [formControl]="category"
+          formControlName="category"
           class="border appearance-none border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
         >
-        <option value="" selected>choisir une categorie</option>
+          <option value="" selected>choisir une categorie</option>
           @for (item of categories; track item) {
             <option [value]="item.id">{{ item.name }}</option>
           }
         </select>
       </div>
+      @if (selectdCategory?.name == 'sport') {
+        <div class="">
+          <label for="description">Type de sport</label><br />
+          <input
+            type="text"
+            name="typesport"
+            formControlName="typesport"
+            class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+          />
+        </div>
+        @if (
+          productform.get('typesport')?.touched &&
+          productform.get('typesport')?.hasError('required')
+        ) {
+          <small class="text-red-500 text-sm">Le type de sport est requis.</small>
+        }
+      }
+      @if (selectdCategory?.name == 'electronique') {
+        <div class="">
+          <label for="description">Caracteritiques</label><br />
+          <input
+            type="text"
+            name="caracteritiques"
+            formControlName="caracteritiques"
+            class="border border-gray-300 focus:border-blue-500 rounded-lg w-full p-3 transition"
+          />
+        </div>
+        @if (
+          productform.get('caracteritiques')?.touched &&
+          productform.get('caracteritiques')?.hasError('required')
+        ) {
+          <small class="text-red-500 text-sm">Le champ caract est requis.</small>
+        }
+      }
+
       <button
         type="submit"
         class="disabled:bg-gray-500 disabled:cursor-not-allowed disabled:scale-none bg-blue-500 hover:bg-blue-600 active:scale-90 rounded-lg w-full p-3 transition"
-        [disabled]="name.invalid || price.invalid"
+        [disabled]="productform.invalid"
         onclick="history.back()"
       >
         Create
@@ -67,4 +109,3 @@
     </form>
   </div>
 </section>
-
